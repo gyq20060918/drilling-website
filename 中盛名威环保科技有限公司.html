@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>优华钻探化工产品销售站</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Microsoft Yahei", sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, #165DFF 0%, #00B42A 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        /* 顶部导航 */
+        .nav-wrap {
+            background:#ffffff;
+            box-shadow:0 1px 6px rgba(0,0,0,0.08);
+            padding:14px 20px;
+            position:sticky;
+            top:0;
+            z-index:99;
+        }
+        .nav-inner{
+            max-width:1200px;
+            margin:0 auto;
+            display:flex;
+            flex-wrap:wrap;
+            gap:16px;
+            align-items:center;
+            justify-content:space-between;
+        }
+        .nav-link{
+            color:#165DFF;
+            text-decoration:none;
+            font-size:15px;
+        }
+        .nav-link:hover{
+            color:#00B42A;
+        }
+        #searchInput{
+            padding:8px 12px;
+            border:1px solid #ddd;
+            border-radius:6px;
+            width:260px;
+            font-size:14px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        /* 企业优势 */
+        .advantage-block{
+            background:linear-gradient(135deg,#e8f0ff 0%,#dff5e3 100%);
+            padding:24px;
+            border-radius:10px;
+            margin-bottom:30px;
+        }
+        .advantage-block h2{
+            color:#165DFF;
+            margin-bottom:14px;
+            font-size:20px;
+        }
+        .advantage-list{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+            gap:12px;
+        }
+        .adv-item{
+            background:#fff;
+            padding:12px;
+            border-radius:8px;
+        }
+
+        .section-title {
+            font-size: 22px;
+            margin: 40px 0 20px;
+            border-left: 5px solid #165DFF;
+            padding-left: 12px;
+            color: #165DFF;
+        }
+
+        .product-wrap {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            gap: 24px;
+        }
+
+        .product-card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 12px rgba(22, 93, 255, 0.08);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            transition:transform 0.25s ease,box-shadow 0.25s ease;
+        }
+        .product-card:hover{
+            transform:translateY(-4px);
+            box-shadow:0 6px 18px rgba(22, 93, 255, 0.14);
+        }
+
+        .product-img-wrap {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #e8f0ff 0%, #dff5e3 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+        }
+
+        .product-img-wrap img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 6px;
+        }
+        /*图片加载失败兜底*/
+        .product-img-wrap img:error {
+            display:none;
+        }
+
+        .product-info {
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .product-info h3 {
+            margin-bottom: 10px;
+            font-size: 17px;
+            color: #165DFF;
+        }
+
+        .product-info .price {
+            font-size: 18px;
+            color: #00B42A;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+        .price-tip{
+            font-size:12px;
+            color:#888;
+            margin-bottom:12px;
+        }
+
+        .product-info p {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 16px;
+            flex-grow: 1;
+        }
+
+        .consult-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #165DFF 0%, #00B42A 100%);
+            color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            padding: 10px;
+            font-size: 15px;
+            cursor: pointer;
+            margin-top: auto;
+            transition: 0.3s;
+        }
+
+        .consult-btn:hover {
+            opacity: 0.9;
+        }
+
+        .contact-block {
+            background: linear-gradient(135deg, #e8f0ff 0%, #dff5e3 100%);
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 50px;
+        }
+        .contact-block a{
+            color:#165DFF;
+            text-decoration:none;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #666;
+            font-size: 14px;
+        }
+        /*返回顶部*/
+        #backTop{
+            position:fixed;
+            bottom:30px;
+            right:24px;
+            width:44px;
+            height:44px;
+            border-radius:50%;
+            background:linear-gradient(135deg,#165DFF,#00B42A);
+            color:white;
+            border:none;
+            font-size:18px;
+            cursor:pointer;
+            display:none;
+            z-index:999;
+        }
+
+        @media(max-width:768px){
+            .nav-inner{
+                flex-direction:column;
+                align-items:flex-start;
+            }
+            #searchInput{
+                width:100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>乌鲁木齐沙依巴克区优华钻探化工产品销售站</h1>
+    <p>钻探泥浆助剂 · 污水处理药剂 · 环保净水材料</p>
+</header>
+
+<div class="nav-wrap">
+    <div class="nav-inner">
+        <div>
+            <a class="nav-link" href="#drill">钻井泥浆系列</a>
+            <a class="nav-link" href="#waste">污水处理药剂</a>
+        </div>
+        <input id="searchInput" placeholder="输入产品名称搜索..." />
+    </div>
+</div>
+
+<div class="container">
+    <div class="advantage-block">
+        <h2>我们的优势</h2>
+        <div class="advantage-list">
+            <div class="adv-item">货源齐全，钻井、污水药剂一站式供货</div>
+            <div class="adv-item">提供配套技术支持，工况选型指导</div>
+            <div class="adv-item">环保水处理解决方案，适配多种行业</div>
+            <div class="adv-item">支持批量订货，现货快速发货</div>
+        </div>
+    </div>
+
+    <h2 id="drill" class="section-title">钻井泥浆系列产品</h2>
+    <div class="product-wrap">
+
+        <div class="product-card">
+            <div class="product-img-wrap">
+                <img src="shunjiandulouji.jpg" alt="瞬间堵漏剂">
+            </div>
+            <div class="product-info">
+                <h3>瞬间堵漏剂</h3>
+                <div class="price">100元/袋</div>
+                <div class="price-tip">参考价格，以电话沟通为准</div>
+                <p>钻井堵漏材料，快速封堵地层漏失，适用于地质勘探钻井护壁堵漏。</p>
+                <a href="tel:13899860226"><button class="consult-btn">立即咨询</button></a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img-wrap">
+                <img src="kanggaowenkangyanjiangshishuiji.jpg" alt="JS-9抗高温抗盐降失水剂">
+            </div>
+            <div class="product-info">
+                <h3>JS-9抗高温抗盐降失水剂</h3>
+                <div class="price">150元/袋</div>
+                <div class="price-tip">参考价格，以电话沟通为准</div>
+                <p>钻井液降失水，抗高温抗盐环境，稳定泥浆性能，保护井壁。</p>
+                <a href="tel:13899860226"><button class="consult-btn">立即咨询</button></a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img-wrap">
+                <img src="kanggaowengaoyajianglvshiji.jpg" alt="SL-II抗高温高压降滤失剂">
+            </div>
+            <div class="product-info">
+                <h3>SL-II抗高温高压降滤失剂</h3>
+                <div class="price">150元/袋</div>
+                <div class="price-tip">参考价格，以电话沟通为准</div>
+                <p>高温高压井使用，降低滤失量，维护钻井液体系稳定。</p>
+                <a href="tel:13899860226"><button class="consult-btn">立即咨询</button></a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img-wrap">
+                <img src="gaoniandulouji.jpg" alt="高粘堵漏剂YDS-1">
+            </div>
+            <div class="product-info">
+                <h3>高粘堵漏剂 YDS-1</h3>
+                <div class="price">100元/袋</div>
+                <div class="price-tip">参考价格，以电话沟通为准</div>
+                <p>高粘度堵漏，处理地层渗漏，钻井护壁堵漏。</p>
+                <a href="tel:13899860226"><button class="consult-btn">立即咨询</button></a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img-wrap">
+                <img src="fuzhisuanjia.jpg" alt="腐植酸钾">
+            </div>
+            <div class="product-info">
+                <h3>腐植酸钾</h3>
+                <div class="price">50元/袋</div>
+                <div class="price-tip">参考价格，以电话沟通为准</div>
+                <p>油田钻井液专用，降粘降滤失，改善泥浆流变性。</p>
+                <a href="tel:13899860226"><button class="consult-btn">立即咨询</button></a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img-wrap">
+                <img src="huanghualvqingfen.jpg" alt="磺化沥青粉FT-1">
+            </div>
+            <div class="product-info">
+                <h3>磺化沥青粉 FT-1</h3>
+                <div class="price">70元/袋</div>
+                <div class="price-tip">参考价格，以电话沟通为准</div>
+                <p>钻井液防塌润滑剂，抑制页岩水化，防井壁坍塌。</p>
+                <a href="tel:13899860226"><button class="consult-btn">立即咨询</button></a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img-wrap">
+                <img src="wuyingguangfangtarunhuaji.jpg" alt="无荧光防塌润滑剂FT-342">
+            </div>
+            <div class="product-info">
+                <h3>无荧光防塌润滑剂 FT-342</h3>
+                <div class="price">65元/袋</div>
+                <div class="price-tip">参考价格，以电话沟通为准</div>
+                <p>无荧光，防塌润滑，适合测井作业，保护井壁。</p>
+                <a href="tel:13899860226"><button class="consult-btn">立即咨询</button></a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img-wrap">
+                <img src="xiazigaipengruntu.jpg" alt="夏孜盖膨润土">
+            </div>
+            <div class="product-info">
+                <h3>夏孜盖膨润土</h3>
+                <div class="price">750元/吨</div>
+                <div class="price-tip">参考价格，以电话沟通为准</div>
+                <p>钻井造浆基料，制备泥浆，悬浮钻屑，护壁。</p>
+                <a href="tel:13899860226"><button class="consult-btn">立即咨询</button></a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img-wrap">
+                <img src="xiazijiepengruntu.jpg" alt="夏子街膨润土">
+            </div>
+            <div class="product-info">
+                <h3>夏子街膨润土</h3>
+                <div class="price">750元/吨</div>
+                <div class="price-tip">参考价格，以电话沟通为准</div>
+                <p>新疆本地膨润土，钻井泥浆基础原料。</p>
+                <a href="tel:13899860226"><button class="consult-btn">立即咨询</button></a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img-wrap">
+                <img src="801dulouji.jpg" alt="随钻801堵漏剂">
+            </div>
+            <div class="product-info">
+                <h3>随钻801堵漏剂</h3>
+                <div class="price">80元/袋</div>
+                <div class="price-tip">参考价格，以电话沟通为准</div>
+                <p>随钻堵漏，不停止钻进，处理微小漏层。</p>
+                <a href="tel:13899860226"><button class="consult-btn">立即咨询</button></a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img-wrap">
+                <img src="803dulouji.jpg" alt="803堵漏剂">
+            </div>
+            <div class="product-info">
+                <h3>803堵漏剂</h3>
+                <div class="price">90元/袋</div>
+                <div class="price-tip">参考价格，以电话沟通为准</div>
+                <p>油田钻井专用堵漏材料，封堵地层孔隙漏失。</p>
+                <a href="tel:13899860226"><button class="consult-btn">立即咨询</button></a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img-wrap">
+                <img src="guangpuhubijiⅢxing.jpg" alt="广谱护壁剂GSP-III">
+            </div>
+            <div class="product-info">
+                <h3>广谱护壁剂 GSP-III</h3>
+                <div class="price">65元/袋</div>
+                <div class="price-tip">参考价格，以电话沟通为准</div>
+                <p>钻井护壁防塌，抑制水敏地层，稳定井壁。</p>
+                <a href="tel:13899860226"><button class="consult-btn">立即咨询</button></a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img-wrap">
+                <img src="guangpuhubiji.jpg" alt="广谱护壁剂GSP-III大港">
+            </div>
+            <div class="product-info">
+                <h3>广谱护壁剂 GSP-III（大港）</h3>
+                <div class="price">150元/袋</div>
+                <div class="price-tip">参考价格，以电话沟通为准</div>
+                <p>高性能钻井护壁剂，复杂地层防塌。</p>
+                <a href="tel:13899860226"><button class="consult-btn">立即咨询</button></a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img-wrap">
+                <img src="hemeishuzhi.jpg" alt="褐煤树脂SPNH">
+            </div>
+            <div class="product-info">
+                <h3>褐煤树脂 SPNH</h3>
+                <div class="price">70元/袋</div>
+                <div class="price-tip">参考价格，以电话沟通为准</div>
+                <p>钻井液降滤失防塌，高温深井泥浆助剂。</p>
+                <a href="tel:13899860226"><button class="consult-btn">立即咨询</button></a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img-wrap">
+                <img src="shuijiejubingxiqingnayan.jpg" alt="水解聚丙烯腈-钠盐Na-HPAH">
+            </div>
+            <div class="product-info">
+                <h3>水解聚丙烯腈-钠盐 Na-HPAH</h3>
+                <div class="price">200元/袋</div>
+                <div class="price-tip">参考价格，以电话沟通为准</div>
+                <p>钻井降滤失，抗盐，改善泥浆性能。</p>
+                <a href="tel:13899860226"><button class="consult-btn">立即咨询</button></a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img-wrap">
+                <img src="zuanjingyeyongjubingxixiananjiayan.jpg" alt="钻井液用聚丙烯酰胺钾盐K-PAM">
+            </div>
+            <div class="product-info">
+                <h3>钻井液用聚丙烯酰胺钾盐 K-PAM</h3>
+                <div class="price">150元/袋</div>
+                <div class="price-tip">参考价格，以电话沟通为准</div>
+                <p>包被抑制剂，抑制粘土分散，防塌。</p>
+                <a href="tel:13899860226"><button class="consult-btn">立即咨询</button></a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img-wrap">
+                <img src="zuanjingyeyongzengnianji.jpg" alt="钻井液用增粘剂80A-51">
+            </div>
+            <div class="product-info">
+                <h3>钻井液用增粘剂 80A-51</h3>
+                <div class="price">150元/袋</div>
+                <div class="price-tip">参考价格，以电话沟通为准</div>
+                <p>提高钻井液粘度，携带钻屑。</p>
+                <a href="tel:13899860226"><button class="consult-btn">立即咨询</button></a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img-wrap">
+                <img src="duoyuangongjuwu141.jpg" alt="多元共聚物141">
+            </div>
+            <div class="product-info">
+                <h3>多元共聚物141</h3>
+                <div class="price">160元/袋</div>
+                <div class="price-tip">参考价格，以电话沟通为准</div>
+                <p>钻井处理剂，抑制防塌，改善泥浆体系。</p>
+                <a href="tel:13899860226"><button class="consult-btn">立即咨询</button></a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img-wrap">
+                <img src="jinkojubinxixianan.jpg" alt="进口聚丙烯酰胺J-REX">
+            </div>
+            <div class="product-info">
+                <h3>进口聚丙烯酰胺 J-REX</h3>
+                <div class="price">260元/袋</div>
+                <div class="price-tip">参考价格，以电话沟通为准</div>
+                <p>日本进口PAM，钻井/污水两用，絮凝增粘。</p>
+                <a href="tel:13899860226"><button class="consult-btn">立即咨询</button></a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img-wrap">
+                <img src="dizhanxianweisu.jpg" alt="低粘羧甲基纤维素钠LV-CMC">
+            </div>
+            <div class="product-info">
+                <h3>低粘纤维素 LV-CMC</h3>
+                <div class="price">260元/袋</div>
+                <div class="price-tip">参考价格，以电话沟通为准</div>
+                <p>钻井液降滤失，低粘型，维护泥浆性能。</p>
+                <a href="tel:13899860226"><button class="consult-btn">立即咨询</button></a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img-wrap">
+                <img src="suojiajixianweisu.jpg" alt="高粘羧甲基纤维素钠CMC">
+            </div>
+            <div class="product-info">
+                <h3>高粘纤维素 CMC</h3>
+                <div class="price">150元/袋</div>
+                <div class="price-tip">参考价格，以电话沟通为准</div>
+                <p>高粘CMC，钻井增粘降滤失。</p>
+                <a href="tel:13899860226"><button class="consult-btn">立即咨询</button></a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img-wrap">
+                <img src="kangyangongjuwu.jpg" alt="抗盐共聚物STQ">
+            </div>
+            <div class="product-info">
+                <h3>抗盐共聚物 STQ</h3>
+                <div class="price">260元/袋</div>
+                <div class="price-tip">参考价格，以电话沟通为准</div>
+                <p>高盐地层钻井使用，抗盐降滤失。</p>
+                <a href="tel:13899860226"><button class="consult-btn">立即咨询</button></a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img-wrap">
+                <img src="shuijiejubingxiqinganyan.jpg" alt="水解聚丙烯腈-铵盐NH4-HPAN">
+            </div>
+            <div class="product-info">
+                <h3>水解聚丙烯腈-铵盐 NH4-HPAN</h3>
+                <div class="price">350元/袋</div>
+                <div class="price-tip">参考价格，以电话沟通为准</div>
+                <p>钻井液降滤失剂，抗盐性能优良。</p>
+                <a href="tel:13899860226"><button class="consult-btn">立即咨询</button></a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img-wrap">
+                <img src="zuanjingyeyongrunhuaji.jpg" alt="钻井液用润滑剂">
+            </div>
+            <div class="product-info">
+                <h3>钻井液用润滑剂（200kg/桶）</h3>
+                <div class="price">2000元/桶</div>
+                <div class="price-tip">参考价格，以电话沟通为准</div>
+                <p>液体钻井润滑剂，降低钻具摩擦阻力。</p>
+                <a href="tel:13899860226"><button class="consult-btn">立即咨询</button></a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img-wrap">
+                <img src="baobeiji.jpg" alt="367包被剂FA-367">
+            </div>
+            <div class="product-info">
+                <h3>367包被剂 FA-367</h3>
+                <div class="price">200元/袋</div>
+                <div class="price-tip">参考价格，以电话沟通为准</div>
+                <p>钻井包被抑制剂，抑制粘土分散，防塌。</p>
+                <a href="tel:13899860226"><button class="consult-btn">立即咨询</button></a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img-wrap">
+                <img src="siyuangaojuhubiji.jpg" alt="探博士四元高聚护壁剂">
+            </div>
+            <div class="product-info">
+                <h3>探博士四元高聚护壁剂</h3>
+                <div class="price">450元/箱</div>
+                <div class="price-tip">参考价格，以电话沟通为准</div>
+                <p>高性能钻井护壁处理剂，复杂地层专用。</p>
+                <a href="tel:13899860226"><button class="consult-btn">立即咨询</button></a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img-wrap">
+                <img src="gaonianjuyinlizixianwei.jpg" alt="高黏阴离子纤维素PAC-HV">
+            </div>
+            <div class="product-info">
+                <h3>高黏阴离子纤维素 PAC-HV</h3>
+                <div class="price">300元/袋</div>
+                <div class="price-tip">参考价格，以电话沟通为准</div>
+                <p>高粘PAC‑HV，深井钻井增粘降滤失。</p>
+                <a href="tel:13899860226"><button class="consult-btn">立即咨询</button></a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img-wrap">
+                <img src="liupianlinsuanna.jpg" alt="六偏磷酸钠">
+            </div>
+            <div class="product-info">
+                <h3>六偏磷酸钠</h3>
+                <div class="price">200元/袋</div>
+                <div class="price-tip">参考价格，以电话沟通为准</div>
+                <p>钻井分散剂，也用于污水处理行业。</p>
+                <a href="tel:13899860226"><button class="consult-btn">立即咨询</button></a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img-wrap">
+                <img src="gongyejiliupianlinsuanna.jpg" alt="六偏磷酸钠 启明星">
+            </div>
+            <div class="product-info">
+                <h3>六偏磷酸钠（启明星工业级）</h3>
+                <div class="price">280元/袋</div>
+                <div class="price-tip">参考价格，以电话沟通为准</div>
+                <p>工业级六偏磷酸钠，分散螯合用途。</p>
+                <a href="tel:13899860226"><button class="consult-btn">立即咨询</button></a>
+            </div>
+        </div>
+
+    </div>
+
+    <h2 id="waste" class="section-title">污水处理药剂 & 其他化工原料</h2>
+    <div class="product-wrap">
+
+        <div class="product-card">
+            <div class="product-img-wrap">
+                <img src="gongyejijuhelvhualv.jpg" alt="聚合氯化铝工业级">
+            </div>
+            <div class="product-info">
+                <h3>聚合氯化铝（工业级 PAC）</h3>
+                <div class="price">70元/袋</div>
+                <div class="price-tip">参考价格，以电话沟通为准</div>
+                <p>洗煤、洗砂、化工厂污水絮凝沉淀。</p>
+                <a href="tel:13899860226"><button class="consult-btn">立即咨询</button></a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img-wrap">
+                <img src="yinshuijijuhelvhualv.jpg" alt="聚合氯化铝饮水级">
+            </div>
+            <div class="product-info">
+                <h3>聚合氯化铝（饮水级 PAC）</h3>
+                <div class="price">80元/袋</div>
+                <div class="price-tip">参考价格，以电话沟通为准</div>
+                <p>饮用水净化、市政污水处理。</p>
+                <a href="tel:13899860226"><button class="consult-btn">立即咨询</button></a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img-wrap">
+                <img src="gongyeyongyan.jpg" alt="工业用盐">
+            </div>
+            <div class="product-info">
+                <h3>工业用盐（日晒盐）</h3>
+                <div class="price">500元/吨</div>
+                <div class="price-tip">参考价格，以电话沟通为准</div>
+                <p>禁止食用，化工、水处理、融雪等工业用途。</p>
+                <a href="tel:13899860226"><button class="consult-btn">立即咨询</button></a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img-wrap">
+                <img src="fapaoji.jpg" alt="十二烷基硫酸钠发泡剂">
+            </div>
+            <div class="product-info">
+                <h3>十二烷基硫酸钠（发泡剂）</h3>
+                <div class="price">550元/袋</div>
+                <div class="price-tip">参考价格，以电话沟通为准</div>
+                <p>发泡原料，钻井、日化行业发泡。</p>
+                <a href="tel:13899860226"><button class="consult-btn">立即咨询</button></a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img-wrap">
+                <img src="suningji.jpg" alt="速凝剂">
+            </div>
+            <div class="product-info">
+                <h3>速凝剂</h3>
+                <div class="price">200元/袋</div>
+                <div class="price-tip">参考价格，以电话沟通为准</div>
+                <p>混凝土快速凝固，喷射混凝土施工。</p>
+                <a href="tel:13899860226"><button class="consult-btn">立即咨询</button></a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img-wrap">
+                <img src="jingzhilvhuamei.jpg" alt="精制氯化镁">
+            </div>
+            <div class="product-info">
+                <h3>精制氯化镁</h3>
+                <div class="price">35元/袋</div>
+                <div class="price-tip">参考价格，以电话沟通为准</div>
+                <p>化工原料，建材、水处理行业使用。</p>
+                <a href="tel:13899860226"><button class="consult-btn">立即咨询</button></a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img-wrap">
+                <img src="jubingxixianan2000.jpg" alt="阴离子聚丙烯酰胺2000万">
+            </div>
+            <div class="product-info">
+                <h3>阴离子聚丙烯酰胺 2000万分子量</h3>
+                <div class="price">200元/袋</div>
+                <div class="price-tip">参考价格，以电话沟通为准</div>
+                <p>洗砂、洗煤污水絮凝沉降。</p>
+                <a href="tel:13899860226"><button class="consult-btn">立即咨询</button></a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img-wrap">
+                <img src="yinlizijubingxixianan.jpg" alt="阴离子聚丙烯酰胺3500万">
+            </div>
+            <div class="product-info">
+                <h3>阴离子聚丙烯酰胺 3500万分子量</h3>
+                <div class="price">280元/袋</div>
+                <div class="price-tip">参考价格，以电话沟通为准</div>
+                <p>高分子量，高难度污水污泥脱水絮凝。</p>
+                <a href="tel:13899860226"><button class="consult-btn">立即咨询</button></a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img-wrap">
+                <img src="yanglizijubingxixianan.jpg" alt="阳离子聚丙烯酰胺">
+            </div>
+            <div class="product-info">
+                <h3>阳离子聚丙烯酰胺</h3>
+                <div class="price">400元/袋</div>
+                <div class="price-tip">参考价格，以电话沟通为准</div>
+                <p>市政污泥脱水，化工厂有机废水处理。</p>
+                <a href="tel:13899860226"><button class="consult-btn">立即咨询</button></a>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img-wrap">
+                <img src="feilizijubingxixianan.jpg" alt="非离子聚丙烯酰胺">
+            </div>
+            <div class="product-info">
+                <h3>非离子聚丙烯酰胺</h3>
+                <div class="price">300元/袋</div>
+                <div class="price-tip">参考价格，以电话沟通为准</div>
+                <p>弱絮凝，适合复杂pH工况污水处理。</p>
+                <a href="tel:13899860226"><button class="consult-btn">立即咨询</button></a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="contact-block">
+        <h2>联系我们</h2>
+        <p>单位：乌鲁木齐沙依巴克区优华钻探化工产品销售站</p>
+        <p>联系人：孔令华</p>
+        <p>电话：<a href="tel:13899860226">13899860226</a></p>
+        <p>竭诚为您提供优质产品与完善技术服务，欢迎各单位来电来访。</p>
+    </div>
+
+    <footer>
+        <p>钻探泥浆助剂 · 污水处理药剂 · 环保净水材料</p>
+    </footer>
+</div>
+
+<button id="backTop">↑</button>
+
+<script>
+// 返回顶部
+const backTopBtn = document.getElementById('backTop');
+window.addEventListener('scroll',()=>{
+    if(window.scrollY>400){
+        backTopBtn.style.display='block';
+    }else{
+        backTopBtn.style.display='none';
+    }
+})
+backTopBtn.addEventListener('click',()=>{
+    window.scrollTo({top:0,behavior:'smooth'})
+})
+
+//产品搜索过滤
+const searchInput = document.getElementById('searchInput');
+const cards = document.querySelectorAll('.product-card');
+searchInput.addEventListener('input',function(){
+    let keyword = this.value.trim().toLowerCase();
+    cards.forEach(card=>{
+        let text = card.innerText.toLowerCase();
+        if(text.includes(keyword)){
+            card.style.display='flex';
+        }else{
+            card.style.display='none';
+        }
+    })
+})
+</script>
+</body>
+</html>
